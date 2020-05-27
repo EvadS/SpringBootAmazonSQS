@@ -9,3 +9,6 @@ Spring Cloud AWS provides
  https://levelup.gitconnected.com/receiving-messages-from-amazon-sqs-in-a-spring-boot-application-6e8a2d7583be
  
  mvn package -DskipTests
+ 
+ java -jar spring-cloud-aws-sample-0.1.0-SNAPSHOT.jar \
+ --spring.profiles.active=prod

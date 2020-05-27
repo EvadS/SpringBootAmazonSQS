@@ -1,6 +1,7 @@
 package com.se.example.amazonsqstest;
 
 import com.google.gson.Gson;
+import com.se.example.amazonsqstest.models.Person;
 import com.se.example.amazonsqstest.models.SamsungPhone;
 import com.se.example.amazonsqstest.utils.SQSBase;
 import com.se.example.amazonsqstest.utils.SQSUtil;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +23,21 @@ public class AmazonSqsDemoApplication implements CommandLineRunner {
     @Autowired
     private SQSBase sqsBase;
 
+    @Autowired
+    private QueueMessagingTemplate queueMessagingTemplate;
+
     public static void main(String[] args) {
         SpringApplication.run(AmazonSqsDemoApplication.class, args);
     }
 
     @Override
     public void run(String... args) {
-        sqsBase.createQueue();
 
-        sendPhonesList();
-        this.sqsUtil.startListeningToMessages();
+      queueMessagingTemplate.convertAndSend(
+              "https://sqs.us-east-2.amazonaws.com/484959649436/DevelopesQueue",
+              new Person("John", "Doe"));
+int aaa = 10;
+
     }
 
     private void sendPhonesList() {
